@@ -30,6 +30,7 @@ exports.signIn = async (req, res) => {
         if(!checkPass) return res.status(400).json({message: 'wrong password'});
 
         delete checkEmail._doc.password;
+        delete checkEmail._doc.token;
         const token = jwt.sign(checkEmail._doc, JWT_PASS);
         await User.updateOne({_id: checkEmail._id}, {token});
 

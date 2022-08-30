@@ -15,7 +15,6 @@ exports.checkLogin = async (req, res, next) => {
         req.user = user;
         next();
     } catch (error) {
-        console.log(18, error);
         res.status(500).json({message: 'server error', error})
     }
 }
