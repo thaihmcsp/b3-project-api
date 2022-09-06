@@ -11,6 +11,6 @@ const ProductDetailSchema = mongoose.Schema({
     status:	{type: String, enum: ['disable', 'enable'], default: 'disable'}
 }, {timestamps: true, collection: 'productDetails'});
 
-const productDetail = mongoose.model('productDetails', ProductDetailSchema);
+const ProductDetail = mongoose.model('productDetails', ProductDetailSchema);
 
-module.exports = productDetail;
+module.exports = ProductDetail;

@@ -18,3 +18,15 @@ exports.checkLogin = async (req, res, next) => {
         res.status(500).json({message: 'server error', error})
     }
 }
+
+exports.checkAdmin = async (req, res, next) => {
+    try {
+        if(req.user.role === 'admin'){
+            next()
+        }else{
+            return res.status(400).json({message: 'you are not allow'}); 
+        }
+    } catch (error) {
+        res.status(500).json({message: 'server error', error})
+    }
+}
