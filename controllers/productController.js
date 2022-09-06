@@ -50,11 +50,15 @@ exports.getOneProduct = async (req, res) => {
 
 exports.updateProductThumb = async (req, res) => {
     try {
-        let product = await Product.findOne({_id: req.params.productId});
         if(!req.file) return res.status(400).json({message: 'please choose an image'});
+
+        let product = await Product.findOne({_id: req.params.productId});
+        console.log(56, product);
         if(!product.thumbnail.startsWith('http')){
+            console.log(58, 'delete');
             fs.unlink(product.thumbnail, () => {return});
         }
+        console.log(60, 'deleted');
         let newproduct = await Product.findOneAndUpdate({_id: req.params.productId}, {thumbnail: req.file.path}, {new: true, runValidators: true});
         res.status(200).json({product: newproduct});
     } catch (error) {
