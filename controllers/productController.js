@@ -22,7 +22,7 @@ exports.upload = multer({ storage: storage ,
 
 exports.getAllProducts = async (req, res) => {
     try {
-        const products = await Product.find().populate('listDtail.productDetails').populate('categoryId');
+        const products = await Product.find().populate('listDtail').populate('categoryId');
         res.status(200).json({products})
     } catch (error) {
         console.log(error);
@@ -41,7 +41,7 @@ exports.createProduct = async (req, res ) => {
 
 exports.getOneProduct = async (req, res) => {
     try {
-        const product = await Product.findById(req.params.productId).populate('listDtail.productDetails').populate('categoryId');
+        const product = await Product.findById(req.params.productId).populate('listDtail').populate('categoryId');
         res.status(200).json({product});
     } catch (error) {
         res.status(500).json({message: 'server error', error});
@@ -53,12 +53,11 @@ exports.updateProductThumb = async (req, res) => {
         if(!req.file) return res.status(400).json({message: 'please choose an image'});
 
         let product = await Product.findOne({_id: req.params.productId});
-        console.log(56, product);
+
         if(!product.thumbnail.startsWith('http')){
-            console.log(58, 'delete');
             fs.unlink(product.thumbnail, () => {return});
         }
-        console.log(60, 'deleted');
+
         let newproduct = await Product.findOneAndUpdate({_id: req.params.productId}, {thumbnail: req.file.path}, {new: true, runValidators: true});
         res.status(200).json({product: newproduct});
     } catch (error) {
@@ -78,7 +77,7 @@ exports.updateProductInfo = async (req, res) => {
 
 exports.findProductByName = async (req, res) => {
     try {
-        const products = await Product.find({productName: {$regex: req.query.productName, $options: 'i'}}).populate('listDtail.productDetails').populate('categoryId');
+        const products = await Product.find({productName: {$regex: req.query.productName, $options: 'i'}}).populate('listDtail').populate('categoryId');
         res.status(200).json({products});    
     } catch (error) {
         res.status(500).json({message: 'server error', error});
