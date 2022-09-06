@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ProductSchema = mongoose.Schema({
-    productName: {type: String, required: true},
+    productName: {type: String, required: true, unique: true},
     listDtail: [{type: String, ref: 'productDetails'}],
     thumbnail: {type: String, default: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfFeFLwcGPyiM6MgD4eMSBmfKPQCQTQc-pDKQa1s8&s'},
     price: {type: Number},
