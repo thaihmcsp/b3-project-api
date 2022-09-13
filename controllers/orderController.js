@@ -21,7 +21,7 @@ exports.createOrder = async (req, res) => {
 exports.getAllOrder = async (req, res) => {
     try {
         const orders = await Order.find()
-        .populate('userId')
+        .populate({path: 'userId', select: '-password -token'})
         .populate({path: 'listProduct.productDetailId', populate: 'productId'});
         res.status(200).json({orders});
     } catch (error) {
