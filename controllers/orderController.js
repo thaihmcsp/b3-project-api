@@ -20,7 +20,9 @@ exports.createOrder = async (req, res) => {
 
 exports.getAllOrder = async (req, res) => {
     try {
-        const orders = await Order.find().populate({path: 'listProduct.productDetailId', populate: 'productId'});
+        const orders = await Order.find()
+        .populate('userId')
+        .populate({path: 'listProduct.productDetailId', populate: 'productId'});
         res.status(200).json({orders});
     } catch (error) {
         res.status(500).json({message: 'server error'});
