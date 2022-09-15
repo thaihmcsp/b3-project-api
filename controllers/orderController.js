@@ -1,3 +1,4 @@
+const { userPublicFields } = require('../constant/constant');
 const Cart = require('../models/Cart');
 const Order = require('../models/Order')
 
@@ -21,7 +22,7 @@ exports.createOrder = async (req, res) => {
 exports.getAllOrder = async (req, res) => {
     try {
         const orders = await Order.find()
-        .populate({path: 'userId', select: '-password -token'})
+        .populate({path: 'userId', select: userPublicFields})
         .populate({path: 'listProduct.productDetailId', populate: 'productId'});
         res.status(200).json({orders});
     } catch (error) {
@@ -32,7 +33,9 @@ exports.getAllOrder = async (req, res) => {
 
 exports.getOneOrder = async (req, res) => {
     try {
-        const order = await Order.findOne({_id: req.params.orderId}).populate({path: 'listProduct.productDetailId', populate: 'productId'});
+        const order = await Order.findOne({_id: req.params.orderId})
+        .populate({path: 'userId', select: userPublicFields})
+        .populate({path: 'listProduct.productDetailId', populate: 'productId'});
         res.status(200).json({order});
     } catch (error) {
         res.status(500).json({message: 'server error'});
@@ -41,7 +44,9 @@ exports.getOneOrder = async (req, res) => {
 
 exports.getOrderByUserId = async (req, res) => {
     try {
-        const order = await Order.find({userId: req.params.userId}).populate({path: 'listProduct.productDetailId', populate: 'productId'});
+        const order = await Order.find({userId: req.params.userId})
+        .populate({path: 'userId', select: userPublicFields})
+        .populate({path: 'listProduct.productDetailId', populate: 'productId'});
         res.status(200).json({order});
     } catch (error) {
         res.status(500).json({message: 'server error'});
