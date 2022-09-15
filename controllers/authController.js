@@ -12,7 +12,8 @@ exports.signUp = async (req, res) => {
         const password = await bcrypt.hash(req.body.password, 10);
         req.body.password = password;
 
-        const user = await User.create(req.body);
+        const username = req.body.email.split('@')[0];
+        const user = await User.create({...req.body, username});
         await Cart.create({userId: user._id});
 
         res.status(200).json({message: 'create account success'})

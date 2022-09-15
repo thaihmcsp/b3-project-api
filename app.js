@@ -9,8 +9,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 app.use('/publics', express.static(path.join(__dirname, './publics')));
+app.use(express.static('./build'));
 
 startup(app);
+
+app.get('*', (req, res) => {
+    res.sendFile('./build/index.html');
+})
 
 app.listen(process.env.PORT, () => {
     console.log('port', process.env.PORT);
