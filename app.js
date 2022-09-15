@@ -14,7 +14,7 @@ app.use(express.static('./build'));
 startup(app);
 
 app.get('*', (req, res) => {
-    res.sendFile('./build/index.html');
+    res.sendFile(path.join(__dirname, './build/index.html'));
 })
 
 app.listen(process.env.PORT, () => {
