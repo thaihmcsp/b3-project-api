@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 const OrderSchema = mongoose.Schema({
-    userId: {type: String, ref: 'users', required: true},
+    userId: {type: ObjectId, ref: 'users', required: true},
     listProduct: [{ 
-       productDetailId: {type: String, ref: 'productDetails'},  
+       productDetailId: {type: ObjectId, ref: 'productDetails'},  
        quantity: Number 
     }],
     total: Number,

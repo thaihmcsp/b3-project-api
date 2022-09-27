@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 const ProductDetailSchema = mongoose.Schema({
-    productId: {type: String, ref: 'products', required: true},
+    productId: {type: ObjectId, ref: 'products', required: true},
     color: {type: String},
     ram: String,
     rom: String,

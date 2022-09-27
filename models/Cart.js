@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const ObjectId = Schema.ObjectId;
 
 const CartSchema = mongoose.Schema({
     userId: {type: String, ref: 'users', required: true},
     listProduct:[{ 
-        productDetailId: {type: String, ref: 'productDetails'},  
+        productDetailId: {type: ObjectId, ref: 'productDetails'},  
         quantity: Number,
         select: {type: Boolean, default: false}
     }]
